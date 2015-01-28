@@ -1,0 +1,115 @@
+/* JS */
+var main = function() {
+    $('.btn').click(function() {
+        var post = $('.status-box').val();
+        $('<li>').text(post).prependTo('.posts');
+       
+       /* Clear the status box */ 
+       $('.status-box').val('');
+       
+       /* Reset counter */
+       $('.counter').text('140');
+       
+       /* Disable the button */
+       $('.btn').addClass('disabled');
+    });   
+    
+    /* Counting the status characters */
+    $('.status-box').keyup(function() {
+        var postLength = $(this).val().length;
+        
+        var charactersLeft = 140 - postLength;
+        
+        $('.counter').text(charactersLeft);
+        
+        /* Disable post key for edge num of status characters */
+        if (charactersLeft < 0) {
+            $('.btn').addClass('disabled');
+        }
+        else if (charactersLeft === 140) {
+            $('.btn').addClass('disabled');    
+        }
+        else {
+            $('.btn').removeClass('disabled');     
+        }
+    });
+    
+    /* Disable post key to avoid posting empty posts */
+    $('.btn').addClass('disabled');
+};
+
+$(document).ready(main);
+
+/* HTML */
+<!doctype html>
+<html>
+  <head>
+    <link href="http://s3.amazonaws.com/codecademy-content/courses/ltp2/css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <form>
+        <div class="form-group">
+          <textarea class="form-control status-box" rows="2" placeholder="What's on your mind?"></textarea>
+        </div>
+      </form>
+      <div class="button-group pull-right">
+        <p class="counter">140</p>
+        <a href="#" class="btn btn-primary">Post</a>
+      </div>
+    
+      <ul class="posts">
+      </ul>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="app.js"></script>
+    
+  </body>
+</html>
+
+
+/* CSS */
+html,
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #404040;
+  background-color: #eee;
+}
+
+.container {
+  width: 520px;
+  margin-top: 20px;
+}
+
+.button-group {
+  margin-bottom: 20px;
+}
+
+.counter {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+
+.posts {
+  clear: both;
+  list-style: none;
+  padding-left: 0;
+  width: 100%;
+}
+
+.posts li {
+  background-color: #fff;
+  border: 1px solid #d8d8d8;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  word-wrap: break-word;
+  min-height: 42px;
+}
